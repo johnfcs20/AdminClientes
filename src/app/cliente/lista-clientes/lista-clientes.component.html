@@ -1,0 +1,125 @@
+
+
+
+<div class="d-flex justify-content-center" *ngIf="loading">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<button class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" type="submit" style="float: right; margin-right: 20px; margin-top: 20px;" data-target="#crud-cliente" *ngIf="!loading"> + Agregar Empleado</button>
+
+<div style="margin-top: 60px;" *ngIf="!loading"> 
+
+
+  <div class="alert alert-dark" role="alert" *ngIf="clientesLista.length === 0">
+  No hay clientes registrados
+  </div>
+
+<table class="table table-striped" style="clear: both;" >
+  <thead *ngIf="clientesLista.length > 0">
+    <tr style="text-align: center;">
+      <th scope="col">Nombres</th>
+      <th scope="col">Apellidos</th>
+      <th scope="col" >Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cliente of clientesLista" style="text-align: center;">
+     <td>{{cliente.nombres}}</td>
+     <td>{{cliente.apellidos}}</td>
+    <th scope="col">
+        <button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#crud-cliente" (click)="detalleCliente(cliente.idNumber)"> <i class="fas fa-pencil-alt"></i></button>
+        <button class="btn btn-danger" type="submit" (click)="eliminarCliente(cliente.idNumber)"> <i class="fas fa-trash"></i></button>
+        <button class="btn btn-secondary" type="submit" data-toggle="modal" data-target="#crud-direcciones" (click)="listaDireccionesClientes(cliente.idNumber)"> <i class="fas fa-list"></i></button>
+      </th>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="modal fade" id="crud-cliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="idCliente === ''">Agegar Cliente</h5>
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="idCliente != ''">Editar Cliente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="limpiarForm()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="crudCliente">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Nombres:</label>
+            <input type="text" class="form-control" id="recipient-name" formControlName="nombres">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Apellidos:</label>
+            <input type="text" class="form-control" id="recipient-name" formControlName="apellidos">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarForm()">Cerrar</button>
+        <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="guardarClientes()" *ngIf="crudCliente.valid">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="crud-direcciones">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabel">Direcciones</h5>  
+      </div>
+
+      <div class="d-flex justify-content-center" *ngIf="loadingModal">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div class="modal-body" *ngIf="!loadingModal">
+        <form [formGroup]="crudDireccionesCliente">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Direcciones:</label>
+            <textarea class="form-control" id="message-text" formControlName="direccion"></textarea>
+          </div>
+         </form> 
+          <button class="btn btn-outline-success my-2 my-sm-0"  type="submit" style="float: right;  margin-top: 20px;"  *ngIf="crudDireccionesCliente.valid" (click)="guardarDirecciones()"> Guardar direccion</button>
+          
+          <div style="margin-top: 75px;">
+            <hr>
+            <h6>Lista de direcciones</h6>
+
+            <hr *ngIf="direccionesClienteLista.length === 0">
+          <div class="alert alert-dark" role="alert" *ngIf="direccionesClienteLista.length === 0">
+          No hay direcciones registradas
+          </div>
+
+
+            <table class="table table-striped" style="clear: both;" *ngIf="direccionesClienteLista.length > 0">
+              <thead>
+                <tr style="text-align: center;">
+                  <th scope="col">Direccion</th>
+                  <th scope="col" >Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let direccion of direccionesClienteLista" style="text-align: center;">
+                 <td>{{direccion.descripcion}}</td>
+                  <th scope="col">
+                    <button class="btn btn-primary" type="submit" data-toggle="modal" (click)="editarDireccion(direccion.descripcion, direccion.direccion_id)"> <i class="fas fa-pencil-alt"></i></button>
+                    <button class="btn btn-danger" type="submit"> <i class="fas fa-trash" (click)="eliminarDireccion(direccion.direccion_id)"></i></button>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+

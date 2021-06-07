@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "crud-clientes-2269b": {
+      "hosting": {
+        "FrontEnd": [
+          "crud-clientes-2269b"
+        ]
+      }
+    }
+  }
+}

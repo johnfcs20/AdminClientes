@@ -28,7 +28,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },
@@ -120,9 +121,16 @@
               "devServerTarget": "FrontEnd:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     }
   },
-  "defaultProject": "FrontEnd"
+  "defaultProject": "FrontEnd",
+  "cli": {
+    "analytics": "1f39a9e3-e2e8-455a-bd96-04e55faa806f"
+  }
 }
